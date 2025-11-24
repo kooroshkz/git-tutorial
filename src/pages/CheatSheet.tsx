@@ -6,20 +6,12 @@ import { gitCommands } from "@/data/gitCommands";
 
 const CheatSheet = () => {
   const handleDownload = () => {
-    const content = gitCommands
-      .map(
-        (cmd) =>
-          `${cmd.command}\n${"-".repeat(50)}\nDescription: ${cmd.description}\nUsage: ${cmd.usage}\nUse Case: ${cmd.useCase}\n\n`
-      )
-      .join("");
-
-    const blob = new Blob([content], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "git-cheatsheet.txt";
-    a.click();
-    URL.revokeObjectURL(url);
+    // Simple download of pre-generated PDF
+    const link = document.createElement('a');
+    // Vite provides BASE_URL which includes the configured base path
+    link.href = `${import.meta.env.BASE_URL}git-command-cheatsheet.pdf`;
+    link.download = 'git-command-cheatsheet.pdf';
+    link.click();
   };
 
   return (
@@ -47,7 +39,7 @@ const CheatSheet = () => {
               className="bg-gradient-to-r from-primary to-secondary hover:opacity-90"
             >
               <Download className="mr-2 h-4 w-4" />
-              Download Cheat Sheet
+              Download PDF
             </Button>
           </div>
         </div>
