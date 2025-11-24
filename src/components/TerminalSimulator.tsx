@@ -49,7 +49,7 @@ const TerminalSimulator = ({ steps }: TerminalSimulatorProps) => {
                 </div>
               )}
               <div className="text-muted-foreground text-xs pl-4 italic border-l-2 border-primary/30 ml-2">
-                💡 {step.explanation}
+                {step.explanation}
               </div>
             </div>
           ))}

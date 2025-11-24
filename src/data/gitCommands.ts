@@ -4,6 +4,7 @@ export interface GitCommand {
   description: string;
   usage: string;
   useCase: string;
+  category: string;
   steps: TerminalStep[];
 }
 
@@ -19,6 +20,7 @@ export const gitCommands: GitCommand[] = [
     command: "git init",
     description: "Initialize a new Git repository in the current directory",
     usage: "git init",
+    category: "CREATE",
     useCase: "Use this when starting a new project to track changes with Git. Creates a .git folder that stores all version control information.",
     steps: [
       {
@@ -37,6 +39,7 @@ export const gitCommands: GitCommand[] = [
     command: "git status",
     description: "Show the working tree status - see which files are tracked, modified, added, or deleted",
     usage: "git status",
+    category: "LOCAL CHANGES",
     useCase: "Check which files have been modified, which are staged for commit, and which are untracked. Use this frequently to understand your repository's current state.",
     steps: [
       {
@@ -55,6 +58,7 @@ export const gitCommands: GitCommand[] = [
     command: "git add",
     description: "Add file contents to the staging area (index) to prepare for commit",
     usage: "git add <file> OR git add -A (add all)",
+    category: "LOCAL CHANGES",
     useCase: "Stage changes before committing. Use 'git add .' to stage all changes, or specify individual files. This is like preparing a package before shipping it.",
     steps: [
       {
@@ -79,6 +83,7 @@ export const gitCommands: GitCommand[] = [
     command: "git commit",
     description: "Record changes to the repository with a descriptive message",
     usage: "git commit -m \"<message>\"",
+    category: "LOCAL CHANGES",
     useCase: "Save your staged changes as a snapshot in the repository history. Think of it as a checkpoint in your project that you can return to later.",
     steps: [
       {
@@ -97,6 +102,7 @@ export const gitCommands: GitCommand[] = [
     command: "git log",
     description: "Show commit logs - view the history of commits in the repository",
     usage: "git log OR git log --oneline (compact view)",
+    category: "COMMIT HISTORY",
     useCase: "Review project history, see who made what changes and when. Useful for understanding how the project evolved and finding specific commits.",
     steps: [
       {
@@ -116,6 +122,7 @@ export const gitCommands: GitCommand[] = [
     command: "git branch",
     description: "List, create, or delete branches in your repository",
     usage: "git branch <branch-name> OR git branch -d <branch-name>",
+    category: "BRANCHES & TAGS",
     useCase: "Create separate lines of development to work on features without affecting the main code. Essential for team collaboration and testing new ideas.",
     steps: [
       {
@@ -135,6 +142,7 @@ export const gitCommands: GitCommand[] = [
     command: "git checkout",
     description: "Switch branches or restore files to a specific state",
     usage: "git checkout <branch-name> OR git checkout -b <new-branch>",
+    category: "BRANCHES & TAGS",
     useCase: "Move between different branches to work on separate features. Use -b to create and switch to a new branch in one command.",
     steps: [
       {
@@ -154,6 +162,7 @@ export const gitCommands: GitCommand[] = [
     command: "git merge",
     description: "Join two or more development histories together",
     usage: "git merge <branch-name>",
+    category: "MERGE & REBASE",
     useCase: "Combine changes from one branch into another, typically merging feature branches back into main. Integrates completed work into the main codebase.",
     steps: [
       {
@@ -173,6 +182,7 @@ export const gitCommands: GitCommand[] = [
     command: "git clone",
     description: "Clone a repository into a new directory",
     usage: "git clone <repository-url>",
+    category: "CREATE",
     useCase: "Download a copy of a remote repository to your local machine. Use this to start working on an existing project or to make a local backup.",
     steps: [
       {
@@ -191,6 +201,7 @@ export const gitCommands: GitCommand[] = [
     command: "git pull",
     description: "Fetch from and integrate with another repository or local branch",
     usage: "git pull origin <branch-name>",
+    category: "UPDATE & PUBLISH",
     useCase: "Download and merge changes from a remote repository. Use this to update your local copy with the latest changes from the team.",
     steps: [
       {
@@ -209,6 +220,7 @@ export const gitCommands: GitCommand[] = [
     command: "git push",
     description: "Update remote repository with local commits",
     usage: "git push origin <branch-name>",
+    category: "UPDATE & PUBLISH",
     useCase: "Upload your local commits to a remote repository. Essential for sharing your work with the team and backing up your code.",
     steps: [
       {
@@ -227,6 +239,7 @@ export const gitCommands: GitCommand[] = [
     command: "git revert",
     description: "Create a new commit that undoes changes from a previous commit",
     usage: "git revert <commit-hash>",
+    category: "UNDO",
     useCase: "Safely undo a commit without rewriting history. Creates a new commit that reverses the changes, preserving the complete project history.",
     steps: [
       {
@@ -250,6 +263,7 @@ export const gitCommands: GitCommand[] = [
     command: "git reset",
     description: "Reset current HEAD to specified state - move or remove commits",
     usage: "git reset --hard <commit-hash> OR git reset --soft HEAD~1",
+    category: "UNDO",
     useCase: "Move the branch pointer to a different commit. --hard discards changes, --soft keeps them staged. WARNING: Can rewrite history if used on pushed commits.",
     steps: [
       {
@@ -273,6 +287,7 @@ export const gitCommands: GitCommand[] = [
     command: "git remote",
     description: "Manage set of tracked repositories (add, remove, rename remotes)",
     usage: "git remote add <name> <url> OR git remote -v",
+    category: "UPDATE & PUBLISH",
     useCase: "Connect your local repository to remote servers like GitHub. Use to add, remove, or view remote repositories that you sync with.",
     steps: [
       {
