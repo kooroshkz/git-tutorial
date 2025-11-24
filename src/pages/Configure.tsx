@@ -7,7 +7,7 @@ import TerminalSimulator from "@/components/TerminalSimulator";
 import { TerminalStep } from "@/data/gitCommands";
 
 const Configure = () => {
-  const [selectedOS, setSelectedOS] = useState<string | null>(null);
+  const [selectedOS, setSelectedOS] = useState<string>("linux");
 
   const configSteps: TerminalStep[] = [
     {
@@ -27,31 +27,38 @@ const Configure = () => {
     }
   ];
 
-  const sshSteps: TerminalStep[] = [
-    {
-      command: 'ssh-keygen -t ed25519 -C "your.email@example.com"',
-      output: "Generating public/private ed25519 key pair.\nEnter file in which to save the key (/home/user/.ssh/id_ed25519):",
-      explanation: "Generate a new SSH key pair - press Enter to use default location"
-    },
-    {
-      output: "Enter passphrase (empty for no passphrase):",
-      explanation: "You can add a passphrase for extra security or press Enter to skip"
-    },
-    {
-      command: "cat ~/.ssh/id_ed25519.pub",
-      output: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILx... your.email@example.com",
-      explanation: "Display your public key - copy this entire output"
-    },
-    {
-      output: "Go to GitHub → Settings → SSH and GPG keys → New SSH key",
-      explanation: "Paste your public key in GitHub and save it"
-    },
-    {
-      command: "ssh -T git@github.com",
-      output: "Hi username! You've successfully authenticated, but GitHub does not provide shell access.",
-      explanation: "Test your SSH connection to GitHub"
-    }
-  ];
+  const getSSHSteps = (): TerminalStep[] => {
+    const isWindows = selectedOS === "windows";
+    const sshPath = isWindows ? "C:\\Users\\YourUsername\\.ssh\\id_ed25519" : "~/.ssh/id_ed25519";
+    const catCommand = isWindows ? "type" : "cat";
+    const pathDisplay = isWindows ? "C:\\Users\\YourUsername\\.ssh\\id_ed25519" : "/home/user/.ssh/id_ed25519";
+    
+    return [
+      {
+        command: 'ssh-keygen -t ed25519 -C "your.email@example.com"',
+        output: `Generating public/private ed25519 key pair.\nEnter file in which to save the key (${pathDisplay}):`,
+        explanation: "Generate a new SSH key pair - press Enter to use default location"
+      },
+      {
+        output: "Enter passphrase (empty for no passphrase):",
+        explanation: "You can add a passphrase for extra security or press Enter to skip"
+      },
+      {
+        command: `${catCommand} ${sshPath}.pub`,
+        output: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILx... your.email@example.com",
+        explanation: "Display your public key - copy this entire output"
+      },
+      {
+        output: "Go to GitHub → Settings → SSH and GPG keys → New SSH key",
+        explanation: "Paste your public key in GitHub and save it"
+      },
+      {
+        command: "ssh -T git@github.com",
+        output: "Hi username! You've successfully authenticated, but GitHub does not provide shell access.",
+        explanation: "Test your SSH connection to GitHub"
+      }
+    ];
+  };
 
   return (
     <div className="min-h-screen bg-background wave-pattern">
@@ -144,7 +151,36 @@ const Configure = () => {
           <p className="text-muted-foreground mb-4">
             SSH allows you to securely connect to GitHub without entering your password every time.
           </p>
-          <TerminalSimulator steps={sshSteps} />
+          <div className="mb-4">
+            <p className="text-sm text-muted-foreground mb-2">Select your operating system:</p>
+            <div className="flex gap-2 flex-wrap">
+              <Button
+                variant={selectedOS === "windows" ? "default" : "outline"}
+                className={selectedOS === "windows" ? "bg-gradient-to-r from-primary to-secondary" : "border-primary/30 hover:bg-primary/10"}
+                onClick={() => setSelectedOS("windows")}
+              >
+                <MonitorSmartphone className="mr-2 h-4 w-4" />
+                Windows
+              </Button>
+              <Button
+                variant={selectedOS === "macos" ? "default" : "outline"}
+                className={selectedOS === "macos" ? "bg-gradient-to-r from-primary to-secondary" : "border-primary/30 hover:bg-primary/10"}
+                onClick={() => setSelectedOS("macos")}
+              >
+                <Apple className="mr-2 h-4 w-4" />
+                macOS
+              </Button>
+              <Button
+                variant={selectedOS === "linux" ? "default" : "outline"}
+                className={selectedOS === "linux" ? "bg-gradient-to-r from-primary to-secondary" : "border-primary/30 hover:bg-primary/10"}
+                onClick={() => setSelectedOS("linux")}
+              >
+                <Laptop className="mr-2 h-4 w-4" />
+                Linux
+              </Button>
+            </div>
+          </div>
+          <TerminalSimulator steps={getSSHSteps()} key={selectedOS} />
         </Card>
 
         <Card className="p-6 bg-card/50 backdrop-blur-sm border-primary/20">
