@@ -60,7 +60,7 @@ const CheatSheet = () => {
             
             return (
               <div key={category}>
-                <h2 className="text-2xl font-bold text-primary mb-4">{category}</h2>
+                <h2 className="text-2xl font-bold text-primary mb-4 text-center">{category}</h2>
                 <div className="grid gap-4">
                   {categoryCommands.map((cmd) => (
                     <Card

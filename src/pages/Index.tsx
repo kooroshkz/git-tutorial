@@ -75,8 +75,8 @@ const Index = () => {
             
             return (
               <div key={category}>
-                <h3 className="text-2xl font-bold text-primary mb-4">{category}</h3>
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <h3 className="text-2xl font-bold text-primary mb-4 text-center">{category}</h3>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
                   {categoryCommands.map((cmd) => (
                     <CommandCard
                       key={cmd.id}

@@ -178,6 +178,30 @@ export const gitCommands: GitCommand[] = [
     ]
   },
   {
+    id: "rebase",
+    command: "git rebase",
+    description: "Reapply commits on top of another base branch",
+    usage: "git rebase <branch-name>",
+    category: "MERGE & REBASE",
+    useCase: "Alternative to merge that creates a linear history. Moves your branch commits to start from the tip of another branch. Useful for keeping a clean project history.",
+    steps: [
+      {
+        command: "git checkout feature-login",
+        output: "Switched to branch 'feature-login'",
+        explanation: "Switch to the branch you want to rebase"
+      },
+      {
+        command: "git rebase main",
+        output: "First, rewinding head to replay your work on top of it...\nApplying: Add login feature",
+        explanation: "Reapplies your commits on top of the main branch"
+      },
+      {
+        output: "WARNING: Never rebase commits that have been pushed to a shared repository",
+        explanation: "Rebasing rewrites history, which can cause issues for others"
+      }
+    ]
+  },
+  {
     id: "clone",
     command: "git clone",
     description: "Clone a repository into a new directory",
@@ -193,6 +217,75 @@ export const gitCommands: GitCommand[] = [
       {
         output: "Repository cloned successfully!",
         explanation: "You now have a complete copy with all history"
+      }
+    ]
+  },
+  {
+    id: "diff",
+    command: "git diff",
+    description: "Show changes between commits, commit and working tree, etc.",
+    usage: "git diff OR git diff --staged",
+    category: "LOCAL CHANGES",
+    useCase: "View what has changed in your files before staging or committing. Use --staged to see changes that are already staged for commit.",
+    steps: [
+      {
+        command: "git diff",
+        output: "diff --git a/index.html b/index.html\n- <h1>Old Title</h1>\n+ <h1>New Title</h1>",
+        explanation: "Shows unstaged changes in your working directory"
+      },
+      {
+        command: "git diff --staged",
+        output: "diff --git a/style.css b/style.css\n+ .new-class { color: blue; }",
+        explanation: "Shows changes that are staged for the next commit"
+      }
+    ]
+  },
+  {
+    id: "stash",
+    command: "git stash",
+    description: "Temporarily save changes without committing them",
+    usage: "git stash OR git stash pop",
+    category: "LOCAL CHANGES",
+    useCase: "Save your work temporarily when you need to switch branches but aren't ready to commit. Later retrieve it with 'git stash pop'.",
+    steps: [
+      {
+        command: "git stash",
+        output: "Saved working directory and index state WIP on main: f7fde41 Latest commit",
+        explanation: "Saves your current changes and cleans the working directory"
+      },
+      {
+        command: "git stash list",
+        output: "stash@{0}: WIP on main: f7fde41 Latest commit",
+        explanation: "Shows all stashed changes"
+      },
+      {
+        command: "git stash pop",
+        output: "On branch main\nChanges not staged for commit:\n  modified: index.html",
+        explanation: "Restores the most recent stashed changes"
+      }
+    ]
+  },
+  {
+    id: "fetch",
+    command: "git fetch",
+    description: "Download objects and refs from remote repository without merging",
+    usage: "git fetch origin",
+    category: "UPDATE & PUBLISH",
+    useCase: "Download changes from remote repository but don't merge them. Allows you to review changes before integrating. Safer than git pull.",
+    steps: [
+      {
+        command: "git fetch origin",
+        output: "remote: Counting objects: 10, done.\nremote: Compressing objects: 100% (8/8), done.",
+        explanation: "Downloads latest changes from remote without merging"
+      },
+      {
+        command: "git log origin/main",
+        output: "commit a3c8e92...\nAuthor: Teammate <team@email.com>\nDate:   Tue Jan 16 09:00:00 2024",
+        explanation: "Review what was downloaded before merging"
+      },
+      {
+        output: "Use 'git merge origin/main' or 'git pull' to integrate the changes",
+        explanation: "Fetch downloads but doesn't change your working directory"
       }
     ]
   },
